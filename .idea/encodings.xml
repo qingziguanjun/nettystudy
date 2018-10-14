@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/main/java/nio/BufferTest.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/nio/ChannelTest.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/nio/SelectorClient.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/nio/SelectorServer.java" charset="GBK" />
+  </component>
+</project>
