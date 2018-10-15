@@ -7,9 +7,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.Date;
 import java.util.Iterator;
-import java.util.Scanner;
 
 public class SelectorServer {
 
@@ -59,21 +57,31 @@ public class SelectorServer {
                 } else if (key.isReadable()) {
                     //10. 可读事件处理
                     SocketChannel channel = (SocketChannel) key.channel();
-                    System.out.println("read" + channel.toString());
+                    System.out.println("read " + channel.toString());
+                    //如果把这句话注释了，不读channel中的内容，Client会不停的发送连接请求
+                    //上面isAcceptable不停执行？为什么
                     readMsg(channel);
                     
-                    //把数据写回到client端
-        			ByteBuffer buffer = ByteBuffer.allocate(1024);
-        			channel.read(buffer);
-        			
-        			buffer.flip();
-        			channel.write(buffer);
+                    
+    				doWrite(channel);
+                    
                 }
                 //11. 移除当前key
                 it.remove();
             }
         }
     }
+    
+	private void doWrite(SocketChannel sc) throws IOException {
+		byte[] bytes = "Hello,NonBlocking IO.".getBytes();
+		//byte[] bytes = req.getBytes();
+		ByteBuffer writeBuffer = ByteBuffer.allocate(bytes.length);
+		writeBuffer.put(bytes);
+		writeBuffer.flip();
+		sc.write(writeBuffer);
+		
+	}
+
 
     private void readMsg(SocketChannel channel) throws IOException {
         ByteBuffer buf = ByteBuffer.allocate(1024);
