@@ -1,14 +1,9 @@
 package nio;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Scanner;
 
 public class SelectorClient {
@@ -33,6 +28,8 @@ public class SelectorClient {
             //4. 向通道写数据
             sChannel.write(buf);
             buf.clear();
+            
+		
         }
     }
     public static void main(String[] args) throws Exception {

@@ -54,11 +54,20 @@ public class SelectorServer {
                     //9. 接入处理
                     SocketChannel socketChannel = ssChannel.accept();
                     socketChannel.configureBlocking(false);
+                    System.out.println("accept" + socketChannel.toString());
                     socketChannel.register(selector, SelectionKey.OP_READ);
                 } else if (key.isReadable()) {
                     //10. 可读事件处理
                     SocketChannel channel = (SocketChannel) key.channel();
+                    System.out.println("read" + channel.toString());
                     readMsg(channel);
+                    
+                    //把数据写回到client端
+        			ByteBuffer buffer = ByteBuffer.allocate(1024);
+        			channel.read(buffer);
+        			
+        			buffer.flip();
+        			channel.write(buffer);
                 }
                 //11. 移除当前key
                 it.remove();
@@ -78,6 +87,7 @@ public class SelectorServer {
     }
     public static void main(String[] args) throws Exception {
 		new SelectorServer().server();
+
 	}
 
 }
